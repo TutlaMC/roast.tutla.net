@@ -12,6 +12,7 @@ RUN npm ci
 COPY . .
 
 # Build the Next.js app
+RUN npx prisma generate
 RUN npm run build
 
 # Expose port 3000
