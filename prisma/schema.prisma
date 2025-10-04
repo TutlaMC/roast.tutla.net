@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Roast {
+  id          Int      @id @default(autoincrement())
+  content     String
+  description String?
+  authorName  String
+  createdAt   DateTime @default(now())
+
+  taggedRoasts Roast[] @relation("RoastTags")
+  taggedBy     Roast[] @relation("RoastTags")
+
+  requestedBy RequestedRoast[] @relation("RequestedRoastTags")
+
+  @@index([createdAt])
+}
+
+model RequestedRoast {
+  id          Int      @id @default(autoincrement())
+  content     String
+  description String?
+  authorName  String
+  createdAt   DateTime @default(now())
+
+  taggedRoasts Roast[] @relation("RequestedRoastTags")
+
+  @@index([createdAt])
+}
