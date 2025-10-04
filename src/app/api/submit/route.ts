@@ -17,8 +17,6 @@ export async function POST(req: NextRequest) {
       description: body.description || null,
       authorName: body.authorName,
     };
-
-    // Only connect tagged roasts if provided and not empty
     if (Array.isArray(body.taggedRoastIds) && body.taggedRoastIds.length > 0) {
       data.taggedRoasts = {
         connect: body.taggedRoastIds.map((id: number) => ({ id })),
